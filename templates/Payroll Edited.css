@@ -1,0 +1,322 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f5f8ff;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 120px;
+    background-color: #001f54;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    gap: 5px;
+}
+
+.menu a:hover, .menu a.active {
+    background-color: #002b7a;
+    border-radius: 8px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header input {
+    width: 40%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.search-group {
+    display: flex;
+    flex: 1;
+    max-width: 500px;
+    gap: 10px;
+}
+
+.search-group input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.search-btn {
+    padding: 12px 20px;
+    background-color: #3182ce;
+    color: white;
+    border: 1px solid #3182ce;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #2563eb;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info .avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+.employee-section h2 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #071b4f;
+    margin-bottom: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    margin: 0;
+}
+
+.actions {
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add {
+    background-color: #3182ce;
+    color: white;
+}
+
+.update {
+    background-color: #4a90e2;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f4fa;
+    font-weight: bold;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+td button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+td button:hover {
+    background-color: #45a049;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Modal Styling */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.4); /* Black with opacity */
+    overflow: auto; /* Enable scroll if needed */
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 50%; /* Adjust modal width */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  /* Header Styling */
+  h2 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Close button styling */
+  .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
+  
+  /* Form grid styling */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  input:focus {
+    border-color: #3182ce;
+    outline: none;
+  }
+  
+  /* Net Salary Styling */
+  .net-salary {
+    grid-column: span 2;
+    font-size: 1.2em;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .net-amount {
+    color: #3182ce;
+  }
+  
+  /* Update Button */
+  button.update {
+    grid-column: span 2;
+    padding: 5px 15px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 70px;
+    margin-left: 5px;
+  }
+  
+  button.update:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .form-grid {
+      grid-template-columns: 1fr; /* Stack form fields on mobile */
+    }
+  }
+  
