@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Báo cáo Nhân sự</title>
+</head>
+<body>
+    <h1>BÁO CÁO NHÂN SỰ</h1>
+    <button onclick="getReport()">Lấy báo cáo</button>
+
+    <div id="report-result"></div>
+
+    <script>
+        function getReport() {
+            fetch("/reports")
+                .then(response => response.json())
+                .then(data => {
+                    let html = "<h3>Kết quả báo cáo:</h3>";
+
+                    html += "<h4>Theo phòng ban:</h4><ul>";
+                    data.by_department.forEach(item => {
+                        html += `<li>Phòng ban ${item.DepartmentID}: ${item.Total} nhân viên</li>`;
+                    });
+                    html += "</ul>";
+
+                    html += "<h4>Theo vị trí:</h4><ul>";
+                    data.by_position.forEach(item => {
+                        html += `<li>Vị trí ${item.PositionID}: ${item.Total} nhân viên</li>`;
+                    });
+                    html += "</ul>";
+
+                    html += "<h4>Theo giới tính:</h4><ul>";
+                    data.by_gender.forEach(item => {
+                        html += `<li>${item.Gender}: ${item.Total} nhân viên</li>`;
+                    });
+                    html += "</ul>";
+
+                    html += "<h4>Theo trạng thái:</h4><ul>";
+                    data.by_status.forEach(item => {
+                        html += `<li>${item.Status}: ${item.Total} nhân viên</li>`;
+                    });
+                    html += "</ul>";
+
+                    document.getElementById("report-result").innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy báo cáo:", error);
+                    document.getElementById("report-result").innerHTML = "<p style='color:red;'>Không thể lấy báo cáo</p>";
+                });
+        }
+    </script>
+</body>
+</html>

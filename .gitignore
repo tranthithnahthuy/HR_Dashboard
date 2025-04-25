@@ -1,19 +1,6 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# Flask
+# Từ phtharo-api
+node_modules/
+dist/
+# Từ main
 .env
-
-# VS Code config
-.vscode/
-
-# Databases
-*.db
-
-# Logs
 *.log
-
-# OS files
-.DS_Store
-Thumbs.db

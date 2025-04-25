@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee List</title>
+  <link rel="stylesheet" href="styles/Add Employee_2.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">HRD</div>
+      <nav class="menu">
+        <a href="#" class="active"><i class="fa-solid fa-users"></i><span>Employee</span></a>
+        <a href="#"><i class="fa-solid fa-money-check-dollar"></i><span>Salary</span></a>
+        <a href="#"><i class="fa-solid fa-building"></i><span>Department</span></a>
+        <a href="#"><i class="fa-solid fa-chart-line"></i><span>Analytic</span></a>
+        <a href="#"><i class="fa-solid fa-bell"></i><span>Notification</span></a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="header">
+        <input type="text" placeholder="Search Employee by ID, name, department, position" />
+        <button class="search-btn">Search</button>
+        <div class="user-info">
+          <span>Ms.Thuy</span>
+          <div class="avatar"></div>
+        </div>
+      </header>
+
+      <section class="employee-section">
+        <h2>Employee Lists</h2>
+        <div class="actions">
+          <button class="btn add" onclick="openAddModal()"><i class="fa-solid fa-user-plus"></i> Add Employee</button>
+          <button class="btn update" onclick="openUpdateModal()"><i class="fa-solid fa-pen-to-square"></i> Update Employee</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Sex</th><th>Position</th>
+              <th>Department ID</th><th>Phone</th><th>Email</th>
+              <th>Date of birth</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>00123</td><td>ThanhPhan</td><td>Male</td><td>Senior Data Analyst</td>
+              <td>0001</td><td>0902-244-414</td><td>thanhphan@gmail.com</td>
+              <td>11/05/2004</td><td>......</td>
+            </tr>
+            <tr>
+              <td>00234</td><td>MinhThanh</td><td>Male</td><td>Junior Data Analyst</td>
+              <td>0001</td><td>0922-334-556</td><td>minhthanh@gmail.com</td>
+              <td>30/01/2004</td><td>......</td>
+            </tr>
+            <tr>
+              <td>02034</td><td>KimNguyen</td><td>Female</td><td>Product Designer</td>
+              <td>0003</td><td>0903-445-678</td><td>kimnguyen@gmail.com</td>
+              <td>19/10/2004</td><td>......</td>
+            </tr>
+            <tr>
+              <td>02244</td><td>PhuongThao</td><td>Female</td><td>Java Developer</td>
+              <td>0002</td><td>0901-337-996</td><td>phuongthao@gmail.com</td>
+              <td>24/09/2004</td><td>......</td>
+            </tr>
+            <tr>
+              <td>03364</td><td>ThanhThuy</td><td>Female</td><td>Product Manager</td>
+              <td>0002</td><td>0904-336-887</td><td>thanhthuy@gmail.com</td>
+              <td>09/04/2004</td><td>......</td>
+            </tr>
+            <tr>
+              <td>99334</td><td>John Anderson</td><td>Male</td><td>Developer</td>
+              <td>0002</td><td>0904-336-887</td><td>johnanderson@gmail.com</td>
+              <td>09/04/1990</td><td>......</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for Add Employee -->
+  <div class="modal" id="addEmployeeModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddModal()">&times;</span>
+      <h2>Add Employee</h2>
+      <form>
+        <div class="form-grid">
+          <label>ID <input type="text" value="99334" /></label>
+          <label>Phone <input type="text" value="0904-336-887" /></label>
+          <label>Name <input type="text" value="John Anderson" /></label>
+          <label>Email <input type="email" value="johnanderson@gmail.com" /></label>
+          <label>Sex <input type="text" value="Male" /></label>
+          <label>Date of Birth <input type="text" value="09/04/1990" /></label>
+          <label>Position <input type="text" value="Developer" /></label>
+          <label>Status <input type="text" value="Good" /></label>
+          <label>Department ID <input type="text" value="0002" /></label>
+          <button type="submit" class="btn add">Add Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Update Employee -->
+  <div class="modal" id="editEmployeeModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeUpdateModal()">&times;</span>
+      <h2>Edit Employee</h2>
+      <form>
+        <div class="form-grid">
+          <label>ID <input type="text" value="99334" /></label>
+          <label>Phone <input type="text" value="0922-334-556" /></label>
+          <label>Name <input type="text" value="Minh Thanh" /></label>
+          <label>Email <input type="email" value="minhthanh@gmail.com" /></label>
+          <label>Sex <input type="text" value="Male" /></label>
+          <label>Date of Birth <input type="text" value="30/01/2004" /></label>
+          <label>Position <input type="text" value="Junior Data Analyst" /></label>
+          <label>Status <input type="text" value="Good" /></label>
+          <label>Department ID <input type="text" value="0001" /></label>
+          <button type="submit" class="btn update">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Open Add Employee Modal
+    function openAddModal() {
+      document.getElementById('addEmployeeModal').style.display = 'flex';
+    }
+
+    // Close Add Employee Modal
+    function closeAddModal() {
+      document.getElementById('addEmployeeModal').style.display = 'none';
+    }
+
+    // Open Update Employee Modal
+    function openUpdateModal() {
+      document.getElementById('editEmployeeModal').style.display = 'flex';
+    }
+
+    // Close Update Employee Modal
+    function closeUpdateModal() {
+      document.getElementById('editEmployeeModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
