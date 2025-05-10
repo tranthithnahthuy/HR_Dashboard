@@ -2,7 +2,8 @@
 # app.py
 from flask import Flask, jsonify , render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
+from sqlalchemy import func, DateTime
+from datetime import datetime, timezone
 import config  # Lấy thông tin kết nối từ file config.py
 
 app = Flask(__name__)
@@ -33,8 +34,7 @@ class Employees(db.Model):
     DepartmentID = db.Column(db.Integer)
     PositionID = db.Column(db.Integer)
     Status = db.Column(db.String(50))
-    CreateAt = db.Column(db.Date)
-    UpdateAt = db.Column(db.Date)
+
     
     
 
@@ -62,32 +62,86 @@ class salaries(db.Model):
     Bonus = db.Column(db.Float)
     Deductions = db.Column(db.Float)
     NetSalary = db.Column(db.Float)
-    CreateAt = db.Column(db.Date)
-    
 # Danh sách chấm công trong PAYROLL MySQL
 class attendance(db.Model):
     __tablename__ = "attendance"
-    __bind_key__ = "sqlserver"  # Bắt buộc để tránh lỗi UnboundExecutionError
+    __bind_key__ = "mysql"  # Bắt buộc để tránh lỗi UnboundExecutionError
     AttendanceID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     EmployeeID = db.Column(db.Integer, db.ForeignKey("employees.EmployeeID"))
     WorkDays = db.Column(db.Integer)
     AbsentDay = db.Column(db.Integer)
     LeavesDay = db.Column(db.Integer)
     AttendanceMon = db.Column(db.Date)
-    CreateAt = db.Column(db.DateTime)
+
+
+# -------------------- ROUTE: TRANG CHỦ --------------------
+
+# Trang chủ
+@app.route("/")
+def index():
+    return render_template("login_1.html")
 
 # -------------------- ROUTE: LẤY DANH SÁCH NHÂN VIÊN --------------------
 
+            
 @app.route('/employees', methods=['GET'])
 def get_employees():
-    # Truy vấn tất cả nhân viên từ bảng Employees trong SQL Server
-    employees = employees.query.all()
+# IN DANH SÁCH NHÂN VIÊN
+    # Lấy danh sách nhân viên từ SQL Server
+    nhan_viens_sql = Employees.query.all()
 
-    print("Danh sách nhân viên:", employees)  # Debug
+    # Lấy danh sách nhân viên từ MySQL (bao gồm cả PhongBan và ChucVu)
+    nhan_viens_mysql = employees.query.all()
 
-    # Truyền danh sách nhân viên vào template để hiển thị
-#    return render_template("danh_sach_nhan_vien.html", nhan_viens=nhan_viens)
-    return jsonify(employees)
+    # Chuyển dữ liệu MySQL thành dictionary để dễ tìm kiếm theo EmployeeID
+    mysql_dict = {nv.EmployeeID: nv for nv in nhan_viens_mysql}
+
+    # Danh sách nhân viên kết hợp
+    merged_data = []
+
+    for nv_sql in nhan_viens_sql:
+        if nv_sql.EmployeeID in mysql_dict:
+            nv_mysql = mysql_dict[nv_sql.EmployeeID]
+            merged_data.append({
+                "EmployeeID": nv_sql.EmployeeID,
+                "FullName": nv_sql.FullName,
+                "DateOfBirth": nv_sql.DateOfBirth,
+                "PhoneNumber": nv_sql.PhoneNumber,
+                "Email": nv_sql.Email,
+                "HireDate": nv_sql.HireDate,
+                "DepartmentID": getattr(nv_sql, "DepartmentID", "N/A"),
+                "PositionID": getattr(nv_sql, "PositionID", "N/A"),
+                "Status": nv_sql.Status
+            })
+            del mysql_dict[nv_sql.EmployeeID]  # Xóa để tránh bị lặp lại
+        else:
+            merged_data.append({
+                "EmployeeID": nv_sql.EmployeeID,
+                "FullName": nv_sql.FullName,
+                "DateOfBirth": nv_sql.DateOfBirth,
+                "PhoneNumber": nv_sql.PhoneNumber,
+                "Email": nv_sql.Email,
+                "HireDate": nv_sql.HireDate,
+                "DepartmentID": getattr(nv_sql, "DepartmentID", "N/A"),
+                "PositionID": getattr(nv_sql, "PositionID", "N/A"),
+                "Status": nv_sql.Status
+            })
+
+    # Thêm các nhân viên chỉ có trong MySQL (sau khi loại bỏ trùng lặp)
+    for nv_mysql in mysql_dict.values():
+        merged_data.append({
+                "EmployeeID": nv_mysql.EmployeeID,
+                "FullName": nv_mysql.FullName,
+                "DepartmentID": nv_mysql.DepartmentID,
+                "PositionID": nv_mysql.PositionID,
+                "Status": nv_mysql.Status,
+
+                "DateOfBirth": getattr(nv_mysql, "DateOfBirth", "N/A"),
+                "PhoneNumber": getattr(nv_mysql, "PhoneNumber", "N/A"),
+                "Email": getattr(nv_mysql, "Email", "N/A"),
+                "HireDate": getattr(nv_mysql, "HireDate", "N/A")
+        })
+    return render_template("Add_Employee_2.html", nhan_viens=merged_data)
 
 # -------------------- ROUTE: LẤY DANH SÁCH LƯƠNG (MY SQL) --------------------
 
@@ -103,7 +157,7 @@ def get_payrolls():
 
     #####################
     
-        # Ghép nhân viên với lương theo MaNV
+        # Ghép nhân viên với lương theo EmployeeID
     payroll_list = []
     for nv in employees:
         luong = next((l for l in payrolls if l.EmployeeID == nv.EmployeeID), None)
@@ -114,10 +168,9 @@ def get_payrolls():
 
     # Truyền danh sách đã ghép vào template
 #    return render_template("in_bang_luong.html", employees = data)
+    return render_template("Payroll_Edited.html", luong_nv = payroll_list)
 
     #####################
-    return jsonify(payroll_list)
-
 
 # -------------------- ROUTE: THÊM NHÂN VIÊN --------------------
 
@@ -222,21 +275,21 @@ def update_employee():
 @app.route("/delete-employee", methods=["DELETE"])
 def delete_employee():
     data = request.get_json()
-    ma_nv = data.get("MaNV")
+    ma_nv = data.get("EmployeeID")
 
     if not ma_nv:
-        return jsonify({"error": "Thiếu MaNV"}), 400
+        return jsonify({"error": "Thiếu EmployeeID"}), 400
 
     # Kiểm tra nếu nhân viên còn liên kết với bảng lương
-    luong_ton_tai = salaries.query.filter_by(MaNV=ma_nv).first()
+    luong_ton_tai = salaries.query.filter_by(EmployeeID=ma_nv).first()
     if luong_ton_tai:
         return jsonify({
             "error": f"Không thể xóa nhân viên {ma_nv} vì đang có dữ liệu lương liên kết."
         }), 400
 
     # Tìm nhân viên trong hai hệ thống
-    nv_sql = Employees.query.filter_by(MaNV=ma_nv).first()
-    nv_mysql = employees.query.filter_by(MaNV=ma_nv).first()
+    nv_sql = Employees.query.filter_by(EmployeeID=ma_nv).first()
+    nv_mysql = employees.query.filter_by(EmployeeID=ma_nv).first()
 
     if not nv_sql and not nv_mysql:
         return jsonify({"error": "Nhân viên không tồn tại trong hệ thống."}), 404
@@ -326,5 +379,6 @@ def report_page():
 
 if __name__ == '__main__':
     print(app.url_map)
+    print(app.config["SQLALCHEMY_DATABASE_URI"])
     app.run(debug=True)
 

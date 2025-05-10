@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Dashboard - Login</title>
+  <link rel="stylesheet" href="styles/login_1.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .login-box {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      padding: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+    
+    .left-side {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .login-icon {
+      max-width: 100px;
+      height: auto;
+    }
+    
+    .right-side {
+      flex: 1;
+      padding-left: 40px;
+    }
+    
+    h2 {
+      color: #0044cc;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      color: #555;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .remember-me input {
+      margin-right: 10px;
+    }
+    
+    .forgot-password {
+      text-align: left;
+    }
+    
+    .forgot-password a {
+      font-size: 12px;
+      color: #007bff;
+      text-decoration: none;
+    }
+    
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #ff6a00;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    .login-btn:hover {
+      background-color: #ff5722;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+      <div class="left-side">
+        <img src="c:\Users\Qcc\OneDrive\Pictures\tta.jpg" alt="Icon" class="login-icon">
+      </div>
+      <div class="right-side">
+        <h2>HR Dash Board</h2>
+        <form>
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          </div>
+          <div class="remember-me">
+            <input type="checkbox" id="remember-me" name="remember-me">
+            <label for="remember-me">Remember Me</label>
+          </div>
+          <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+          </div>
+          <button type="submit" class="login-btn">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
